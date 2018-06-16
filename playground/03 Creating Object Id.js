@@ -10,6 +10,8 @@ const { MongoClient, ObjectID } = require('mongodb').MongoClient;
 let obj = new ObjectID();
 console.log(obj)
 
+// asdfasdf
+
 // this is a method that takes two argument
 MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
   if (err) {
