@@ -2,16 +2,22 @@
   "name": "node",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
-  "dependencies": {
-    "express": "^4.16.3",
-    "hbs": "^4.0.1"
-  },
-  "devDependencies": {},
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeoEspinoza12/node-course1.git"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LeoEspinoza12/node-course1/issues"
+  },
+  "homepage": "https://github.com/LeoEspinoza12/node-course1#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "mongodb": "^2.2.5"
+  }
 }
