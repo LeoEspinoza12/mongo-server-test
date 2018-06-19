@@ -3,13 +3,12 @@ const mongoose = require('mongoose');
 let Todo = mongoose.model('Todo', {
  text: {
      type: String,
-     require: true, 
+     required: true, 
      minlength: 2,
      trim: true 
   },
    completed: {
      type: Boolean,
-     require: true, 
      minlength: 2 
    },
    completedAt: {
