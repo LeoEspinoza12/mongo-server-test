@@ -105,7 +105,9 @@ app.patch('/todos/:id', (req, res) => {
 
 
 
-
+/////////////////////////////////////////////
+// this process is used to create a user account to the 
+// to the database. 
 app.post('/users', (req, res) => {
   var body = _.pick(req.body, ['email', 'password'])
   var user = new User(body);
@@ -117,17 +119,18 @@ app.post('/users', (req, res) => {
   }).catch( (e) => {
     res.status(400).send(e);
   });
-
-
 });
 
 
 
 
 
-
+/////////////////////////////////////////////////
+// this get request is design to make
+// authentication before returning the request
 app.get('/users/me', authenticate, (req, res) => {
-  res.send(req.user)
+  res.send(req.user);
+  // console.log(req.user._id)
 })
 
 

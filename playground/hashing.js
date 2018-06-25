@@ -3,11 +3,10 @@
   // then require it on the file
 const {SHA256} = require('crypto-js');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs')
 
 // create a data
-var data = {
-  id: 4
-};
+var data = { id: 4 };
 
 // using a method sign(), this method will hash your password
 // you can check on the library 
@@ -26,4 +25,25 @@ console.log('the token value is: ', token);
 
 let decode = jwt.decode(token, 'secret');
 console.log('the decoded value: ', decode);
+
+
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+// PASSWORD //
+
+let password = '123abc';
+
+bcrypt.genSalt(10, (err, salt) => {
+  bcrypt.hash(password, salt, (err, hash) => {
+    console.log(hash)
+  })
+  
+let hashedpassword = '$2a$10$MjWMU1Cnc58oxoHEnk8aEOY5S0s4NWcL6CkUfnsTbr6VTLqi6lmHe';
+  bcrypt.compare(password, hashedpassword, (err, res) => {
+    console.log(res)
+  })
+
+})
+
+
 
