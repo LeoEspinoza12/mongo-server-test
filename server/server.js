@@ -145,7 +145,7 @@ app.get('/users/me', authenticate, (req, res) => {
 /////////////////////////////////////////////////
 app.post('/users/login', (req, res) => {
   var body = _.pick(req.body, ['email', 'password'])
-  res.send(body)
+  // res.send(body)
   User.findByCredentials(body.email, body.password).then((user) => {
     res.header('x-auth', token).send(user);
   }).catch((err) => {
@@ -155,6 +155,26 @@ app.post('/users/login', (req, res) => {
 })
 
 /////////////////////////////////////////////////
+
+
+
+
+/////////////////////////////////////////////////
+app.delete('/users/me/token', authenticate, (req, res)=>{
+  // console.log('asdf')
+  req.user.removeToken(req.token).then(() => {
+    res.status(200).send();
+  },() => {
+    res.status(400).send();
+  });
+});
+
+/////////////////////////////////////////////////
+
+
+
+
+
 
 
 

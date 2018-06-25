@@ -71,6 +71,7 @@ UserSchema.statics.findByCredentials = function(email, password){
     return new Promise((resolve, reject) => {
       bcrypt.compare(password, user.password, (err, res) => {
         if(res){
+          console.log(res)
           // res.send(user)
           resolve(user)
         } else {
@@ -82,6 +83,34 @@ UserSchema.statics.findByCredentials = function(email, password){
 
 }
 ///////////////////////////////////////////////////////////
+
+
+
+
+///////////////////////////////////////////////////////////
+UserSchema.methods.removeToken = function (token) {
+  let user = this;
+  // console.log(user)
+  return user.update({
+    $pull: { 
+      tokens: {token}
+     }
+  })
+}
+///////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ///////////////////////////////////////////////////////////
