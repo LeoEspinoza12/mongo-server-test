@@ -234,13 +234,26 @@ describe('POST /users', () => {
       });
   })
 
-  // it('should return validation errors if request invalid', (done) => {
+  it('should return validation errors if request invalid', (done) => {
+    let email = 'manskas@email';
+    let password = '12345';
+    request(app)
+      .post('/users')
+      .send({email, password})
+      .expect(400)
+      .end(done)
 
-  // })
 
-  // it('it should not create user if email is inuse', (done) => {
+  })
 
-  // })
-
+  it('it should not create user if email is in use', (done) => {
+    request(app)
+      .post('/users')
+      .send({
+        email: users[0],
+        password: '12345'})
+      .expect(400)
+      .end(done)
+  })
 
 })
