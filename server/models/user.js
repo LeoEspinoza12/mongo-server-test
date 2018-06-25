@@ -33,14 +33,19 @@ let UserSchema = new mongoose.Schema({
   }]
 });
 
+
+///////////////////////////////////////////////////////////
 UserSchema.methods.toJSON = function() {
   let user = this;
   let userObject = user.toObject();
 
   return _.pick(userObject, ['_id', 'email']);
 }
+///////////////////////////////////////////////////////////
 
 
+
+///////////////////////////////////////////////////////////
 UserSchema.methods.generateAuthToken = function() {
   let user = this;
   let access = 'auth';
@@ -52,8 +57,34 @@ UserSchema.methods.generateAuthToken = function() {
     return token;
   });
 };
+///////////////////////////////////////////////////////////
 
 
+///////////////////////////////////////////////////////////
+UserSchema.statics.findByCredentials = function(email, password){
+  let User = this;
+  return User.findOne({email}).then((user) => {
+    if(!user){
+      return Promise.reject();
+    }
+    
+    return new Promise((resolve, reject) => {
+      bcrypt.compare(password, user.password, (err, res) => {
+        if(res){
+          // res.send(user)
+          resolve(user)
+        } else {
+          reject();
+        }
+      })
+    })
+  })
+
+}
+///////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////
 UserSchema.statics.findByToken = function(token) {
   let User = this;
   let decoded;
@@ -66,20 +97,21 @@ UserSchema.statics.findByToken = function(token) {
     // })
     return Promise.reject();
   }
-
   return User.findOne({
     '_id': decoded._id,
     'tokens.token': token,
     'tokens.access': 'auth'
   })
 }
+///////////////////////////////////////////////////////////
 
 
+
+
+///////////////////////////////////////////////////////////
 UserSchema.pre('save', function(next){
   let user = this;
-
   // console.log('this isi the user password', user.password)
-
   if(user.isModified('password')){
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(user.password, salt, (err, hash) => {
@@ -89,11 +121,9 @@ UserSchema.pre('save', function(next){
     })
   } else {
     next();
-
   }
-
 })
-
+///////////////////////////////////////////////////////////
 
 
 
