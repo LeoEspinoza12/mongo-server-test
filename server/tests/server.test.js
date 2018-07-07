@@ -194,6 +194,7 @@ describe('PATCH /todos/:id', () => {
         expect(res.body.todo.text).toBe(text);
         expect(res.body.todo.completed).toBeTruthy();
         // expect(res.body.todo.completedAt).toBe('number');
+        expect(typeof res.body.todo.completedAt).toBe('number');
     })
     .end(done);
   });
@@ -326,21 +327,21 @@ describe('POST /users/login', () => {
     // console.log(users[1].password)
     // console.log(users[1].email)
     request(app)
-      .post('/users/login')
-      .send({
-        email: users[1].email,
-        password: users[1].password
-      })
-      .expect(200)
-      .expect((res) => {
-        expect(res.headers['x-auth']).toBeTruthy();
-      })
-      .end((err, res)=>{
-        if(err){
-          return done(err)
-        }
+    .post('/users/login')
+    .send({
+      email: users[1].email,
+      password: users[1].password
+    })
+    .expect(200)
+    .expect((res) => {
+      expect(res.headers['x-auth']).toBeTruthy();
+    })
+    .end((err, res)=>{
+      if(err){
+        return done(err)
+      }
         User.findById(users[1]._id).then((user) => {
-          expect(user.tokens[1]).toInclude({
+          expect(user.tokens[1]).toMatchObject({
             access: 'auth',
             token: res.headers['x-auth']
           })
